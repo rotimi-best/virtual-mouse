@@ -1,0 +1,16 @@
+{
+  "name": "mouse",
+  "version": "1.0.0",
+  "description": "",
+  "main": "mouse.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "socket.io-client": "^2.3.0",
+    "robot-js": "github:p120ph37/robot-js#prebuilt"
+  }
+}

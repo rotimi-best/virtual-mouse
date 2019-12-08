@@ -1,0 +1,43 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Mouse event listener</title>
+  </head>
+  <body style="max-height:1000px; max-width: 800px; overflow: none;">
+    <h1>
+      Welcome
+    </h1>
+    <div id="touchpad" style="color: white; background-color: black; height: 1000px; width: 700px; display: block; margin: 10px auto; text-align: center;">
+      Mouse
+    </div>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"
+      integrity="sha256-bQmrZe4yPnQrLTY+1gYylfNMBuGfnT/HKsCGX+9Xuqo="
+      crossorigin="anonymous"
+    ></script>
+    <script type="text/javascript" src="env.js">
+      // set "socketUrl" in this file
+    </script>
+    <script>
+      const socket = io(socketUrl);
+
+      window.addEventListener("load", function() {
+        const touchpad = document.getElementById('touchpad')
+        touchpad.addEventListener("touchstart", () => {
+          socket.emit('clickpress')
+        })
+        touchpad.addEventListener("touchend", () => {
+          socket.emit('clickrelease')
+        })
+        touchpad.addEventListener("touchmove", function(e) {
+          var touchobj = e.changedTouches[0] // reference first touch point (ie: first finger)
+          x = parseInt(touchobj.clientX) // get x position of touch point relative to left edge of browser
+          y = parseInt(touchobj.clientY)
+          socket.emit('touchmove', {x, y})
+          touchpad.innerHTML = 'Status: touchstart<br> ClientX: ' + x + 'px' + '<br> ClientY: ' + y + 'px'
+          e.preventDefault()
+        });
+      });
+    </script>
+  </body>
+</html>
